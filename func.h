@@ -25,7 +25,8 @@ double* getRotMatrix(Quaterniond& q);
 
 void novaRot();
 
+void timer(int value);
 
-
+color prelazna(color a, color b, float t);
 
 #endif 
