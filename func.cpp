@@ -293,3 +293,19 @@ void novaRot() {
 	}
 
 }
+
+//funkcija prelazna koja sluzi da menja boju pozadine tako sto je na pocetku boja a, menja se ka boji b, dok je t parametar 
+//koji sluzi da postoji postepeni nezni prelaz izmedju boja
+
+color prelazna(color a, color b, float t)
+{
+	color c((1 - t) * a.r + t * b.r, (1 - t) * a.g + t * b.g, (1 - t) * a.b + t * b.b);
+
+	return c;
+}
+
+void timer(int value)
+{
+	glutPostRedisplay();
+	glutTimerFunc(16, timer, 0);
+}
