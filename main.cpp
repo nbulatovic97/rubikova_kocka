@@ -1,5 +1,5 @@
-﻿#include <stdlib.h>
-#include <windows.h>
+#include <stdlib.h>
+//#include <windows.h>
 #include "func.h"
 #include "var.h"
 #include "key_mou.h"
@@ -9,6 +9,8 @@
 
 int layer = 0;
 int width = 1150, height = 700;
+
+int txtre = 1;
 
 //parametri koji se koriste za animaciju dugmeta
 float button::x_par_butt = 0.07;
@@ -69,8 +71,6 @@ int main(int argc, char* argv[]) {
 	inicijalizuj();
 
 
-	// podesavanje pozadine
-	glClearColor(0.75, 0.75, 0.75, 1); 
 
 	//Enable blok
 	glEnable(GL_COLOR_MATERIAL);
@@ -79,6 +79,8 @@ int main(int argc, char* argv[]) {
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, txtre);
 	
 	
 	
@@ -87,16 +89,16 @@ int main(int argc, char* argv[]) {
 
 	
 	//podesavanje parametara svetlosti
-	GLfloat position[] = { 1,-10,4,1 };
-	GLfloat ambient[] = { 1,1,1,1 };
-	GLfloat diffuse[] = { 1,1,1,1 };
-	GLfloat specular[] = { 1,1,1,1 };
+	GLfloat position[] = { 1,3,4,1 };
+	GLfloat ambient[] = { 2,2,2,1 };
+	GLfloat diffuse[] = { 1.1,1.1,1.1,1 };
+	GLfloat specular[] = { 0.3,0.2,0.1,1 };
 
 	//Inicijalizujemo osobine svetlosti 
 	glLightfv(GL_LIGHT0, GL_POSITION, position);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
-	//glLightfv(GL_LIGHT0, GL_SPECULAR, specular); //koristim bez, ali ostavljam opciju 
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);  
 	
 
 	glLoadIdentity();
