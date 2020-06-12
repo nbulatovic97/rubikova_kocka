@@ -14,6 +14,24 @@ void reshape(int w, int h) {
 }
 
 void display() {
+
+	//izdvajamo trenutno vreme koje nam treba za promenu boje pozadine(menja se u odnosu na vreme)
+	const int curTime = glutGet(GLUT_ELAPSED_TIME);
+
+	//promenljiva t koja sluzi kao parametar u promeni pozadine kako bi prelaz izmedju boja bio postepen kroz vreme
+	//parametar t treba imati vrednost [0, 1]
+	// parametar brzina_promene sluzi za promenu brzine kojom ce se menjati boja pozadine
+	float brzina_promene = 0.0003;
+	const float t = cos(float(curTime) * brzina_promene) * 0.5 + 0.5;
+
+	
+	// funkcija kojom se postepeno menja boja pozadine, prva boja je pocetna, druga je krajnja posle cega se boja menja postepeno opet ka prvoj 
+	color trenutnaPozadina = prelazna(color(0.3, 0.2, 0.5), color(0.8, 0.7, 0.5), t);
+
+	glClearColor(trenutnaPozadina.r, trenutnaPozadina.g, trenutnaPozadina.b, 1);
+	
+
+
 	//ciscenje bafera
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
