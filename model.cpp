@@ -1,5 +1,6 @@
 #include "model.h"
 #include "func.h"
+#include "image.h"
 
 //funkcija za iscrtavanje jedne stranice jedne male kocke i bojenje 
 void draw_part(float* a, float* b, float* c, float* d, int part) {
@@ -165,9 +166,81 @@ void doTransition(float fromX, float toX, float fromY, float toY) {
 }
 
 
+static GLuint name;
 //funkcija za ispis teksta na pocetni ekran
 void komande() {
 
+	Image* image;
+
+	glTexEnvf(GL_TEXTURE_ENV,
+		GL_TEXTURE_ENV_MODE,
+		GL_REPLACE);
+
+	image = image_init(0, 0);
+
+	/* Kreira se prva tekstura. */
+	image_read(image);
+
+	/* Generisu se identifikatori tekstura. */
+	glGenTextures(1, &name);
+
+	//glBindTexture(GL_TEXTURE_2D, 0);
+
+	/* Unistava se objekat za citanje tekstura iz fajla. */
+	
+
+	glBindTexture(GL_TEXTURE_2D, name);
+
+	glTexParameteri(GL_TEXTURE_2D,
+		GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D,
+		GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D,
+		GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,
+		GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+ 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+		image->width, image->height, 0,
+		GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	image_done(image);
+
+	glBindTexture(GL_TEXTURE_2D, name);
+	glBegin(GL_QUADS);
+	glNormal3f(0, 0, 1);
+
+	glTexCoord2f(0, 0);
+	glVertex3f(1, 0, -1);
+
+	glTexCoord2f(1, 0);
+	glVertex3f(-4, 0, -1);
+
+	glTexCoord2f(1, 1);
+	glVertex3f(-4, 2.5, -1);
+
+	glTexCoord2f(0, 1);
+	glVertex3f(1, 2.5, -1);
+	glEnd();
+
+		glBegin(GL_QUADS);
+	glNormal3f(0, 0, 1);
+
+	glTexCoord2f(0, 0);
+	glVertex3f(1, 0, -1);
+
+	glTexCoord2f(1, 0);
+	glVertex3f(5, 5, -1);
+
+	glTexCoord2f(1, 1);
+	glVertex3f(5, 2.5, -1);
+
+	glTexCoord2f(0, 1);
+	glVertex3f(1, 2.5, -1);
+	glEnd();
+
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	stampaj(-3.5, 2.2, "Komande:(capslock za kontrarotaciju)", 1);
 	stampaj(-3.2, 1.9, "Z/z - prednja rotacija", 1);
